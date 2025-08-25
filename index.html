@@ -1,0 +1,592 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Église Alliance avec Christ (EAC) — Accueil</title>
+  <meta name="description" content="Une Église, un cœur pour les nations. Rejoignez-nous ce dimanche à Lemba, Kinshasa." />
+  <link rel="canonical" href="/" />
+  <meta name="theme-color" content="#0b0b0b" />
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Église Alliance avec Christ (EAC) — Accueil" />
+  <meta property="og:description" content="Une Église, un cœur pour les nations. Rejoignez-nous ce dimanche." />
+  <meta id="ogImage" property="og:image" content="assets/og-cover.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Preload hero for LCP -->
+  <link id="preloadHero" rel="preload" as="image" href="https://i.pinimg.com/736x/a2/86/4b/a2864bd7964d5c5812ac92093dab4f3c.jpg" />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <!-- Gemini API Key -->
+  <script>
+    window.GEMINI_API_KEY = "AIzaSyAostDkthiddfRyWF7xT608JSvQlz0v2Xg";
+  </script>
+
+  <!-- Import map for Gemini SDK in browser -->
+  <script type="importmap">
+  {
+    "imports": {
+      "@google/genai": "https://esm.sh/@google/genai@^1.13.0"
+    }
+  }
+  </script>
+
+  <style>
+    :root{
+      --header-h: 64px;
+      --accent: #e58b47;
+      --accent-2: #6b9873;
+    }
+    html, body { 
+      scroll-behavior: smooth; 
+    }
+    body{ background:#0b0b0b; color:#fff; }
+    [data-reveal]{ 
+      opacity:0; 
+      transform: translateY(30px) scale(0.97); 
+      transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+      transition-delay: var(--reveal-delay, 0s); 
+    }
+    [data-reveal].in-view{ 
+      opacity:1; 
+      transform: none; 
+      filter: drop-shadow(0 2px 12px rgba(229,139,71,.08));
+    }
+    .card, .accent-btn, .tab-btn, .badge, .rounded-2xl {
+      transition: box-shadow .3s cubic-bezier(.4,0,.2,1), transform .3s cubic-bezier(.4,0,.2,1);
+    }
+    .card:hover, .accent-btn:hover, .tab-btn.active, .badge:hover, .rounded-2xl:hover {
+      box-shadow: 0 6px 32px -8px var(--accent, #e58b47);
+      transform: translateY(-2px) scale(1.03);
+    }
+    .tab-btn { transition: color .2s ease, border-color .2s ease, box-shadow .3s; }
+    .tab-btn.active { color: var(--accent); border-color: var(--accent); box-shadow: 0 2px 8px -2px var(--accent); }
+    .hero-bg-inner{
+      will-change: transform;
+      animation: zoom-in 40s ease-in-out infinite alternate;
+    }
+    @keyframes zoom-in { from { transform: scale(1); } to { transform: scale(1.08); } }
+    .eyebrow{ letter-spacing:.12em; text-transform:uppercase; font-size:.75rem; }
+    .eyebrow:before{ content:""; display:inline-block; width:28px; height:2px; background:var(--accent); margin-right:.5rem; transform: translateY(-2px); }
+    .nav-active{ color:var(--accent); font-weight: 500; }
+    .progress{ height:3px; transform-origin:0 50%; }
+    .card{ background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.03)); border:1px solid rgba(255,255,255,.08); }
+    .accent-btn{ background:var(--accent); color:#111; }
+    .accent-outline{ border-color:rgba(255,255,255,.3); }
+    .badge{ background: rgba(229,139,71,.18); color:#ffd9c2; border:1px solid rgba(229,139,71,.35); }
+    /* Tabs */
+    .tab-btn { transition: color .2s ease, border-color .2s ease; }
+    .tab-btn.active { color: var(--accent); border-color: var(--accent); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    
+    /* New animations */
+    .h1-word {
+        display: inline-block;
+        transform: translateY(100%);
+        opacity: 0;
+        animation: reveal-word .8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+        animation-delay: var(--delay);
+    }
+    .h1-word-wrapper {
+        display: inline-block;
+        overflow: hidden;
+        vertical-align: top;
+    }
+    @keyframes reveal-word {
+        to {
+            transform: translateY(0);
+            opacity: 1;
+        }
+    }
+  </style>
+</head>
+<body class="selection:bg-white selection:text-black antialiased">
+  <a href="#hero" class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 rounded bg-white px-3 py-2 text-black">Aller au contenu</a>
+
+  <!-- Header -->
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-black/40 supports-[backdrop-filter]:bg-black/40 backdrop-blur">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <a href="#hero" class="flex items-center gap-3" aria-label="Accueil EAC">
+        <img id="logo" class="h-8 w-8 rounded bg-white object-cover" alt="Logo EAC" />
+        <span id="brandName" class="font-semibold tracking-wide">EAC</span>
+      </a>
+      <nav id="mainNav" class="hidden md:flex items-center gap-6 text-sm text-white/80" aria-label="Navigation principale">
+        <a href="#about" class="hover:text-white transition-colors">À propos</a>
+        <a href="#ministry" class="hover:text-white transition-colors">Ministère</a>
+        <a href="#preaching" class="hover:text-white transition-colors">Prédications</a>
+        <a href="#program" class="hover:text-white transition-colors">Programme</a>
+        <a href="#contact" class="hover:text-white transition-colors">Contact</a>
+      </nav>
+      <div class="flex items-center gap-3">
+        <a href="#visit" class="hidden sm:inline-flex rounded-2xl px-4 py-2 bg-white text-black font-medium hover:opacity-90 transition-opacity">Planifier votre visite</a>
+        <a href="#give" class="hidden sm:inline-flex rounded-2xl px-4 py-2 accent-btn font-medium hover:opacity-90 transition-opacity">Donner</a>
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center rounded-xl p-2 hover:bg-white/10" aria-expanded="false" aria-controls="mobileNav" aria-label="Ouvrir le menu">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+        </button>
+      </div>
+    </div>
+    <div class="progress bg-[var(--accent)] w-full origin-left" style="transform:scaleX(0)"></div>
+    <div id="mobileNav" class="md:hidden hidden border-t border-white/10 bg-black/95">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-4 grid gap-2 text-sm">
+        <a href="#about" class="py-2">À propos</a>
+        <a href="#ministry" class="py-2">Ministère</a>
+        <a href="#preaching" class="py-2">Prédications</a>
+        <a href="#program" class="py-2">Programme</a>
+        <a href="#contact" class="py-2">Contact</a>
+        <div class="flex gap-2 pt-2">
+          <a href="#visit" class="flex-1 inline-flex justify-center rounded-2xl px-4 py-2 bg-white text-black font-medium">Visite</a>
+          <a href="#give" class="flex-1 inline-flex justify-center rounded-2xl px-4 py-2 accent-btn font-medium">Donner</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section id="hero" class="relative min-h-[76vh] sm:min-h-[86vh] w-full flex items-center overflow-hidden">
+    <div class="absolute inset-0">
+      <div id="heroBg" class="absolute inset-0 bg-cover bg-center hero-bg-inner"></div>
+      <!-- Ajout image principale du hero -->
+      <img src="https://i.pinimg.com/736x/a2/86/4b/a2864bd7964d5c5812ac92093dab4f3c.jpg" alt="EAC Hero" class="hidden" />
+    </div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/65 to-black/20"></div>
+    <div class="relative mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 mt-28">
+      <span id="heroBadge" class="eyebrow text-white/70 badge inline-flex items-center gap-2 px-3 py-1 rounded-full mb-2 md:mb-3" data-reveal></span>
+      <h1 id="heroTitle" data-reveal class="mt-6 text-[clamp(2.2rem,6.2vw,4.4rem)] font-extrabold tracking-[-.02em] leading-tight"></h1>
+      <p id="heroSubtitle" data-reveal class="mt-4 max-w-2xl text-base sm:text-lg text-white/85" style="--reveal-delay: 150ms;"></p>
+      <div data-reveal class="mt-6 flex flex-wrap items-center gap-3" style="--reveal-delay: 250ms;">
+        <a href="#visit" class="rounded-2xl px-5 py-3 bg-white text-black font-semibold hover:opacity-90 transition-opacity">Planifier votre visite</a>
+        <a href="#preaching" class="rounded-2xl px-5 py-3 accent-outline border hover:bg-white/10 transition-colors">Regarder le message</a>
+      </div>
+      <div class="mt-8 grid gap-4 sm:grid-cols-3" data-reveal style="--reveal-delay: 350ms;">
+        <div class="rounded-2xl card p-4"><p class="text-sm text-white/60">Prochain Culte</p><p id="serviceTimes" class="text-lg font-semibold"></p></div>
+        <div class="rounded-2xl card p-4"><p class="text-sm text-white/60">Adresse</p><p id="locationName" class="text-lg font-semibold"></p></div>
+        <div class="rounded-2xl card p-4"><p class="text-sm text-white/60">WhatsApp</p><p id="whatsapp" class="text-lg font-semibold"></p></div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- VERSE OF THE DAY -->
+  <section id="verse" class="py-20 bg-gradient-to-b from-black via-zinc-900 to-black text-center">
+    <div class="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8" data-reveal>
+        <div class="eyebrow text-white/70">Verset du Jour</div>
+        <div class="my-6 text-6xl text-[var(--accent)]">
+          <i class="fa-solid fa-book-open"></i>
+        </div>
+        <blockquote class="mt-4 min-h-[1em] text-2xl sm:text-3xl lg:text-4xl font-serif italic text-white/90 leading-relaxed">
+            <p id="verseText">"Car je connais les projets que j'ai formés sur vous, dit l'Éternel, projets de paix et non de malheur, afin de vous donner un avenir et de l'espérance."</p>
+        </blockquote>
+        <cite id="verseRef" class="mt-4 block text-lg font-semibold text-[var(--accent)] not-italic tracking-wide">Jérémie 29:11</cite>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section id="about" class="py-24 bg-black scroll-mt-[var(--header-h)]">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-12">
+        <div class="eyebrow text-white/70" data-reveal>Présentation</div>
+        <h2 class="text-3xl sm:text-5xl font-bold" data-reveal>À propos de l'Église</h2>
+      </div>
+      
+      <div class="space-y-10">
+        <div data-reveal>
+          <img id="aboutImage" src="https://i.pinimg.com/originals/d1/9b/cd/d19bcdbcc5ee2b0a31518ac1c8fbd43c.jpg" alt="Assemblée EAC" class="rounded-2xl w-full h-auto object-cover" loading="lazy" />
+        </div>
+        
+        <div class="text-center max-w-3xl mx-auto" data-reveal>
+          <p class="text-sm text-white/60">Visionnaire</p>
+          <p id="visionaries" class="text-2xl font-semibold"></p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-10 items-start">
+          <div data-reveal>
+            <h3 class="text-2xl font-bold text-[var(--accent)] mb-2">Notre Nature</h3>
+            <p class="text-lg text-white/85">L'Église Alliance avec Christ est un organisme ecclésiastique engagé dans le ministère de la délivrance intégrale de l'homme, touchant son corps, son âme et son esprit. Notre mission est de bénir sans but lucratif, en apportant la guérison et la restauration à tous ceux qui s'approchent de Christ.</p>
+          </div>
+          <div data-reveal>
+            <h3 class="text-2xl font-bold text-[var(--accent)] mb-2">Notre Mission Mondiale</h3>
+            <p class="text-lg text-white/85">L'EAC a une vision qui transcende les nations et les ethnies. En tant qu'église locale et universelle, elle se positionne comme une ambassade céleste sur terre. Notre objectif : établir Jésus-Christ dans le cœur des gens et les placer en Christ, afin d'octroyer le VISA du ciel.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MINISTÈRE -->
+  <section id="ministry" class="py-32 bg-gradient-to-b from-black to-zinc-900 scroll-mt-[var(--header-h)]">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="text-center">
+        <div id="missionHeader" data-reveal>
+            <div class="eyebrow text-white/70">Notre Mission</div>
+            <h2 class="text-3xl sm:text-5xl font-bold">Objectifs, Délivrance & Bénédiction</h2>
+        </div>
+      </div>
+      <div id="missionContent" class="mt-12 space-y-10">
+        <!-- Objectifs -->
+        <div class="grid md:grid-cols-2 gap-8" data-reveal>
+            <div class="card p-6 rounded-2xl">
+                <h3 class="text-2xl font-bold text-[var(--accent)] mb-4">Objectifs Primordiaux</h3>
+                <ul id="primordiaux-list" class="space-y-2 text-white/85 list-disc list-inside"></ul>
+            </div>
+            <div class="card p-6 rounded-2xl">
+                <h3 class="text-2xl font-bold text-[var(--accent)] mb-4">Objectifs Secondaires</h3>
+                <ul id="secondaires-list" class="space-y-2 text-white/85 list-disc list-inside"></ul>
+            </div>
+        </div>
+        <!-- Délivrance -->
+        <div class="card p-8 rounded-2xl" data-reveal>
+            <h3 class="text-3xl font-bold text-center mb-6">Domaine de Délivrance</h3>
+            <ul id="delivrance-list" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 text-center"></ul>
+        </div>
+        <!-- Bénédiction -->
+        <div class="card p-8 rounded-2xl" data-reveal>
+            <h3 class="text-3xl font-bold text-center mb-6">Domaines de Bénédiction</h3>
+            <ul id="benediction-list" class="grid sm:grid-cols-2 gap-8 text-center"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROGRAMME -->
+  <section id="program" class="py-16 bg-gradient-to-t from-black to-zinc-900 scroll-mt-[var(--header-h)]">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="eyebrow text-white/70" data-reveal>Horaires</div>
+      <h2 class="text-3xl sm:text-5xl font-bold" data-reveal>Programme des cultes</h2>
+      <div class="mt-8 grid md:grid-cols-3 gap-6" data-reveal>
+        <div class="rounded-2xl card p-6 transition-transform duration-300 hover:-translate-y-1">
+          <!-- Banner culte d'intercession mondial -->
+          <img src="https://i.pinimg.com/736x/80/cd/e1/80cde1727b17052bcc759b7226eeb8fd.jpg" alt="Culte d'intercession mondiale" class="w-full h-32 object-cover rounded-xl mb-3" loading="lazy" />
+          <p class="text-sm text-white/60">Mardi</p>
+          <h3 class="text-lg font-semibold">Culte d'intercession mondiale</h3>
+          <p class="text-white/80 mt-1">08h00 — 11h00</p>
+        </div>
+        <div class="rounded-2xl card p-6 transition-transform duration-300 hover:-translate-y-1" style="--reveal-delay: 150ms;">
+          <!-- Banner culte d'enseignement -->
+          <img src="https://i.pinimg.com/736x/62/ee/a3/62eea35fb5e1f469c8fd5c17b1e28b69.jpg" alt="Culte d'enseignement" class="w-full h-32 object-cover rounded-xl mb-3" loading="lazy" />
+          <p class="text-sm text-white/60">Mercredi</p>
+          <h3 class="text-lg font-semibold">Culte d'enseignement</h3>
+          <p class="text-white/80 mt-1">16h00 — 19h00</p>
+        </div>
+        <div class="rounded-2xl card p-6 transition-transform duration-300 hover:-translate-y-1" style="--reveal-delay: 250ms;">
+          <!-- ...existing code for dimanche... -->
+          <img src="https://i.pinimg.com/736x/fa/b5/d7/fab5d7d4e2651edec67c2da9066527b4.jpg" alt="Action de grâce & célébration" class="w-full h-32 object-cover rounded-xl mb-3" loading="lazy" />
+          <p class="text-sm text-white/60">Dimanche</p>
+          <h3 class="text-lg font-semibold">Action de grâce & célébration</h3>
+          <p class="text-white/80 mt-1">08h30 — 12h00</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRÉDICATIONS + ÉVÉNEMENTS -->
+  <section id="preaching" class="py-16 bg-black scroll-mt-[var(--header-h)]">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+      <div class="flex items-end justify-between gap-4">
+        <div>
+          <div class="eyebrow text-white/70" data-reveal>Prédications</div>
+          <h2 class="text-3xl sm:text-5xl font-bold" data-reveal>Nos derniers messages</h2>
+        </div>
+      </div>
+      <div class="mt-6 grid md:grid-cols-2 gap-6 items-center">
+        <div class="aspect-video rounded-2xl overflow-hidden border border-white/10 transition-transform duration-300 hover:-translate-y-1" data-reveal>
+          <!-- Ajout image d'illustration pour la prédication si pas de vidéo -->
+          <img src="assets/preaching.jpg" alt="Prédication EAC" class="w-full h-full object-cover absolute inset-0" style="z-index:0; opacity:0.2;" loading="lazy" />
+          <iframe id="sermonFrame" class="w-full h-full relative" src="" title="Sermon vidéo" style="border:0; z-index:1;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
+        </div>
+        <div class="space-y-4">
+          <p id="sermonDesc" class="text-white/85" data-reveal></p>
+          <div class="flex flex-wrap gap-3" data-reveal style="--reveal-delay:150ms;">
+            <a id="watchLink" href="#preaching" class="rounded-full px-4 py-2 accent-btn text-sm font-semibold">Regarder</a>
+            <a id="listenLink" href="#" class="rounded-full px-4 py-2 border border-white/30 text-sm hover:bg-white/10 transition-colors">Écouter (audio)</a>
+            <a id="notesLink" href="#" class="rounded-full px-4 py-2 border border-white/30 text-sm hover:bg-white/10 transition-colors">Notes</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-14">
+        <div class="flex items-end justify-between gap-4">
+            <h3 class="text-2xl sm:text-3xl font-bold" data-reveal>Événements à venir</h3>
+        </div>
+        <div id="eventsScroller" class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 overflow-x-auto snap-x snap-mandatory sm:overflow-visible sm:snap-none [scrollbar-width:none] [-ms-overflow-style:none]">
+          <!-- Events are now rendered dynamically from siteData -->
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- VISITE + CARTE -->
+  <section id="visit" class="py-16 bg-white text-black scroll-mt-[var(--header-h)]">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
+      <div class="space-y-4">
+        <div class="eyebrow text-black/70" data-reveal>Nous rejoindre</div>
+        <h2 class="text-3xl sm:text-5xl font-extrabold tracking-tight" data-reveal>Planifiez votre visite</h2>
+        <p class="text-black/70" data-reveal>Tout ce qu’il faut savoir : horaires, accueil enfants, et quoi attendre du culte.</p>
+        <div class="flex flex-wrap gap-3" data-reveal>
+          <a href="#contact" class="rounded-2xl px-5 py-3 bg-black text-white font-semibold hover:opacity-90 transition-opacity">Je viens ce dimanche</a>
+          <a href="#contact" class="rounded-2xl px-5 py-3 border border-black/20 hover:bg-black/5 transition-colors">Poser une question</a>
+        </div>
+      </div>
+      <div class="rounded-2xl overflow-hidden border border-black/10 aspect-video w-full" data-reveal>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d994.5440912809656!2d15.339955868759153!3d-4.378039663601769!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1a6a3700d7bb7035%3A0xd8562f9864feaca6!2s%C3%8glise%20Alliance%20avec%20Christ!5e0!3m2!1sfr!2scd!4v1755414511292!5m2!1sfr!2scd" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- DONNER -->
+  <section id="give" class="py-16 bg-gradient-to-b from-zinc-900 to-black scroll-mt-[var(--header-h)]">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 grid md:grid-cols-2 gap-8 items-center">
+      <div>
+        <div class="eyebrow text-white/70" data-reveal>Générosité</div>
+        <h2 class="text-3xl sm:text-5xl font-bold" data-reveal>La générosité change des vies</h2>
+        <p class="mt-3 text-white/85" data-reveal>Votre soutien permet de bâtir une église qui impacte des vies, notre communauté et le monde. Chaque don est une semence pour le Royaume.</p>
+        <div class="mt-5 flex flex-wrap gap-3" data-reveal>
+          <a href="#contact" class="rounded-2xl px-5 py-3 accent-btn font-semibold hover:opacity-90 transition-opacity">Donner maintenant</a>
+        </div>
+      </div>
+      <div class="rounded-2xl h-full card flex items-center justify-center" data-reveal>
+          <i class="fa-solid fa-hand-holding-heart text-9xl text-white/20"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <!-- CONTACT -->
+<section id="contact" class="py-16 bg-black scroll-mt-[var(--header-h)]">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+    <div class="eyebrow text-white/70" data-reveal>Contact</div>
+    <h2 class="text-3xl sm:text-5xl font-bold" data-reveal>Restons connectés</h2>
+    <p class="mt-2 text-white/80" data-reveal>Une question ? Un besoin de prière ? N'hésitez pas à nous écrire.</p>
+    <div class="mt-8 grid md:grid-cols-2 gap-8">
+      
+      <!-- LE FORMULAIRE MODIFIÉ -->
+      <form id="contactForm" class="space-y-4" novalidate>
+        <div>
+          <label for="name" class="block text-sm text-white/70">Nom complet</label>
+          <input id="name" name="name" type="text" required class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 px-3 py-2 placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40" placeholder="Votre nom" />
+        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label for="phone" class="block text-sm text-white/70">Téléphone / WhatsApp</label>
+            <input id="phone" name="phone" type="tel" required class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 px-3 py-2 placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40" placeholder="ex: +243 812 345 678" />
+          </div>
+          <div>
+            <label for="email" class="block text-sm text-white/70">E-mail (optionnel)</label>
+            <input id="email" name="email" type="email" class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 px-3 py-2 placeholder-white/40" placeholder="vous@exemple.com" />
+          </div>
+        </div>
+        <div>
+          <label for="message" class="block text-sm text-white/70">Message</label>
+          <textarea id="message" name="message" rows="5" required class="mt-1 w-full rounded-xl bg-white/10 border border-white/10 px-3 py-2 placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-white/40" placeholder="Votre message..."></textarea>
+        </div>
+        <div class="flex flex-wrap items-center gap-4 pt-2">
+          <button type="submit" id="submitBtn" class="rounded-2xl px-5 py-3 accent-btn font-semibold hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-wait">
+            Envoyer le message
+          </button>
+          <!-- Élément pour afficher le statut du formulaire (succès/erreur) -->
+          <p id="formStatus" class="text-sm font-medium"></p>
+        </div>
+      </form>
+      
+      <!-- Les informations de contact à droite (inchangées) -->
+      <div class="space-y-4">
+        <div class="rounded-2xl card p-4"><p class="text-sm text-white/60">Adresse</p><p id="addressBox" class="text-lg font-semibold"></p></div>
+        <div class="rounded-2xl card p-4"><p class="text-sm text-white/60">WhatsApp</p><p class="text-lg font-semibold"><a id="waLink" href="#"></a></p></div>
+        <div class="rounded-2xl card p-4"><p class="text-sm text-white/60">Email</p><p class="text-lg font-semibold"><a id="emailLink" href="#"></a></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- FOOTER -->
+  <footer class="py-12 border-t border-white/10 bg-black">
+    <div class="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8 text-sm text-white/60 text-center">
+      <img id="logoFoot" class="h-8 w-8 rounded bg-white mb-3 object-cover mx-auto" alt="Logo EAC" />
+      <p>© <span id="year"></span> — <span id="brandFoot"></span>. Tous droits réservés.</p>
+      <p class="mt-2" id="footerAddress"></p>
+      <div class="mt-6 flex justify-center gap-5">
+        <a id="facebookLink" href="#" target="_blank" rel="noopener" class="text-white/60 hover:text-white transition-colors" aria-label="Facebook">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd"></path></svg>
+        </a>
+        <a id="instagramLink" href="#" target="_blank" rel="noopener" class="text-white/60 hover:text-white transition-colors" aria-label="Instagram">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.88 1.44 1.44 0 000-2.88z"></path></svg>
+        </a>
+        <a id="youtubeLink" href="#" target="_blank" rel="noopener" class="text-white/60 hover:text-white transition-colors" aria-label="YouTube">
+          <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M19.812 5.418c.861.23 1.538.907 1.768 1.768C21.998 8.78 22 12 22 12s0 3.22-.42 4.814a2.506 2.506 0 0 1-1.768 1.768c-1.594.42-7.812.42-7.812.42s-6.218 0-7.812-.42a2.506 2.506 0 0 1-1.768-1.768C2 15.22 2 12 2 12s0-3.22.42-4.814a2.506 2.506 0 0 1 1.768-1.768C5.782 5 12 5 12 5s6.218 0 7.812.418ZM9.94 15.582V8.418L15.91 12l-5.97 3.582z" clip-rule="evenodd"></path></svg>
+        </a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Back-to-top -->
+  <button id="toTop" class="hidden fixed bottom-4 right-4 md:right-6 z-40 rounded-full p-3 bg-white/10 border border-white/20 hover:bg-white/20 backdrop-blur-sm transition-all" aria-label="Revenir en haut">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
+  </button>
+
+  <!-- JSON-LD Schema -->
+  <script type="application/ld+json" id="schemaLd"></script>
+
+  <!-- DATA + SCRIPTS (single file) -->
+  <script type="module">
+    import { GoogleGenAI, Type } from '@google/genai';
+
+    // ---- Site content (from site.json) ----
+    const siteData = {
+      "churchName": "Église Alliance avec Christ", "acronym": "EAC", "locationName": "Lemba — Kinshasa", "whatsapp": "+1 (709) 999-4303", "email": "info@egliseallianceavecchrist.org", "address": "20bis, Lutshatsha Q/de l'école, Commune de Lemba", "brand": {"logo": "https://i.pinimg.com/736x/5d/e3/38/5de3389f5b089c0b13183a330ba49ae8.jpg", "ogImage": "assets/og-cover.jpg"}, "socials": {"facebookUrl": "https://www.facebook.com/eacdrc", "instagramUrl": "https://www.instagram.com/eacdrc", "youtubeUrl": "https://www.youtube.com/@Eacdrc"}, "hero": {"image": "https://i.pinimg.com/736x/a2/86/4b/a2864bd7964d5c5812ac92093dab4f3c.jpg", "badge": "Bienvenue à l'EAC", "title": "Une Église, un Cœur pour le Monde", "accentWords": ["un", "Cœur"], "subtitle": "Découvrez une communauté de foi, de famille et d’impact. Rejoignez-nous à Lemba, Kinshasa."}, "about": {"image": "https://i.pinimg.com/originals/d1/9b/cd/d19bcdbcc5ee2b0a31518ac1c8fbd43c.jpg", "visionaries": "Révérend pasteur Jean-Guylain Kabongo, époux de la pasteure Sarah Kabongo"}, "mission": {"objectifsPrimordiaux": ["Célébration de Jésus-Christ", "Communion Fraternelle", "Formation des Disciples", "Intercession et Supplication", "Évangélisation et Suivi"], "objectifsSecondaires": ["Développement de l'Homme par la promotion de l'éducation", "Réalisation de Projets Sociaux (Hôpital, élevage, agriculture, etc.)"], "delivrance": [{"icon": "fa-solid fa-cross", "title": "Spirituelle", "desc": "Détruire la puissance du péché"}, {"icon": "fa-solid fa-wand-magic-sparkles", "title": "Surnaturelle", "desc": "Éliminer l'impact de la sorcellerie"}, {"icon": "fa-solid fa-heart-pulse", "title": "Physique", "desc": "Libération des maladies"}, {"icon": "fa-solid fa-brain", "title": "Psychique", "desc": "Guérison interne"}, {"icon": "fa-solid fa-people-roof", "title": "Familiale", "desc": "Soutien dans le mariage et la fécondité"}, {"icon": "fa-solid fa-briefcase", "title": "Professionnelle", "desc": "Succès dans les études et le travail"}, {"icon": "fa-solid fa-handshake-angle", "title": "Morale", "desc": "Amélioration des caractères"}], "benediction": [{"icon": "fa-solid fa-place-of-worship", "title": "Bénédiction Spirituelle", "desc": "Viser le ciel et établir une relation intime avec Dieu."}, {"icon": "fa-solid fa-sack-dollar", "title": "Bénédiction Matérielle", "desc": "Promouvoir la richesse et l'épanouissement terrestre pour tous."}]}, "sermon": {"embedUrl": "https://www.youtube.com/embed/videoseries?list=PL2_32fJk1h_qgtnH0tztD-p4yD6yUf6Zf", "desc": "Revivez nos moments de culte et de prédication. Chaque message est une invitation à approfondir votre foi et à vous rapprocher de Dieu.", "watchUrl": "#", "listenUrl": "#", "notesUrl": "#"}, "events": [{"title": "Culte d'intercession mondiale", "date": "Mardi · 08h00", "img": "https://i.pinimg.com/736x/80/cd/e1/80cde1727b17052bcc759b7226eeb8fd.jpg", "href": "#program"}, {"title": "Culte d'enseignement", "date": "Mercredi · 16h00", "img": "https://i.pinimg.com/736x/62/ee/a3/62eea35fb5e1f469c8fd5c17b1e28b69.jpg", "href": "#program"}, {"title": "Action de grâce & célébration", "date": "Dimanche · 08h30", "img": "https://i.pinimg.com/736x/fa/b5/d7/fab5d7d4e2651edec67c2da9066527b4.jpg", "href": "#program"}], "giving": {"image": "assets/giving-hands.jpg"}, "map": {"lat": -4.3855, "lng": 15.3121, "zoom": 15}
+    };
+
+    // ---- Helpers ----
+    const setEl = (id, prop, val) => { const el = document.getElementById(id); if (el) el[prop] = val; };
+    const digitsOnly = (str) => (str||'').replace(/\D/g,'');
+
+    // ---- Render Ministry Section ----
+    function renderMinistrySection(data) {
+        const primordiauxList = document.getElementById('primordiaux-list'); if(primordiauxList) primordiauxList.innerHTML = data.objectifsPrimordiaux.map(item => `<li>${item}</li>`).join('');
+        const secondairesList = document.getElementById('secondaires-list'); if(secondairesList) secondairesList.innerHTML = data.objectifsSecondaires.map(item => `<li>${item}</li>`).join('');
+        const delivranceList = document.getElementById('delivrance-list'); if(delivranceList) delivranceList.innerHTML = data.delivrance.map(item => `<li class="space-y-2"><div class="text-4xl text-[var(--accent)]"><i class="${item.icon}"></i></div><h4 class="font-bold">${item.title}</h4><p class="text-sm text-white/70">${item.desc}</p></li>`).join('');
+        const benedictionList = document.getElementById('benediction-list'); if(benedictionList) benedictionList.innerHTML = data.benediction.map(item => `<li class="space-y-3"><div class="text-5xl text-[var(--accent)]"><i class="${item.icon}"></i></div><h4 class="text-xl font-bold">${item.title}</h4><p class="text-white/80">${item.desc}</p></li>`).join('');
+    }
+    
+    // ---- Animate Hero Title ----
+    function animateHeroTitle(title, accentWords = []) {
+        const titleEl = document.getElementById('heroTitle'); if (!titleEl) return;
+        const words = title.split(' '); titleEl.innerHTML = ''; 
+        words.forEach((word, index) => {
+            const wordWrapper = document.createElement('span'); wordWrapper.className = 'h1-word-wrapper';
+            const wordSpan = document.createElement('span'); wordSpan.className = 'h1-word'; wordSpan.textContent = word;
+            if (accentWords.includes(word.replace(/,/g, ''))) { wordSpan.style.color = 'var(--accent)'; }
+            wordSpan.style.setProperty('--delay', `${index * 100 + 200}ms`);
+            wordWrapper.appendChild(wordSpan); titleEl.appendChild(wordWrapper); titleEl.appendChild(document.createTextNode(' '));
+        });
+    }
+
+    // ---- Update Next Service ----
+    function updateNextService() {
+        const serviceEl = document.getElementById('serviceTimes'); if (!serviceEl) return;
+        const schedule = [{ day: 2, startTime: '08:00', endTime: '11:00', text: "Mardi 08h00 — 11h00", name: "Culte d'intercession" }, { day: 3, startTime: '16:00', endTime: '19:00', text: "Mercredi 16h00 — 19h00", name: "Culte d'enseignement" }, { day: 0, startTime: '08:30', endTime: '12:00', text: "Dimanche 08h30 — 12h00", name: "Célébration" }];
+        const now = new Date(new Date().toLocaleString("en-US", { timeZone: "Africa/Kinshasa" }));
+        let upcomingServices = [];
+        schedule.forEach(service => {
+            const serviceDate = new Date(now); serviceDate.setDate(now.getDate() - now.getDay() + service.day);
+            const [startHours, startMinutes] = service.startTime.split(':').map(Number); serviceDate.setHours(startHours, startMinutes, 0, 0);
+            const endDate = new Date(serviceDate); const [endHours, endMinutes] = service.endTime.split(':').map(Number); endDate.setHours(endHours, endMinutes, 0, 0);
+            if (now > endDate) { serviceDate.setDate(serviceDate.getDate() + 7); }
+            upcomingServices.push({ ...service, date: serviceDate });
+        });
+        upcomingServices.sort((a, b) => a.date - b.date);
+        const nextService = upcomingServices[0];
+        const [endHours, endMinutes] = nextService.endTime.split(':').map(Number); const nextServiceEndDate = new Date(nextService.date); nextServiceEndDate.setHours(endHours, endMinutes, 0, 0);
+        const isLive = now >= nextService.date && now < nextServiceEndDate;
+        const badgeEl = document.getElementById('heroBadge');
+        if (badgeEl) { badgeEl.innerHTML = isLive ? `<i class="fa-solid fa-tower-broadcast mr-2"></i> En direct : ${nextService.name}` : `<i class="fa-regular fa-clock mr-2"></i> Prochain culte : ${nextService.name}`; }
+        serviceEl.textContent = nextService.text;
+    }
+
+    // ---- Render ----
+    function render(data){
+      document.title = `${data.acronym || data.churchName} — Accueil`; setEl('ogImage', 'content', data.brand.ogImage); setEl('preloadHero', 'href', data.hero.image); setEl('logo', 'src', data.brand.logo); setEl('logoFoot', 'src', data.brand.logo); setEl('brandName', 'textContent', data.acronym); setEl('brandFoot', 'textContent', data.churchName);
+      const heroBg = document.getElementById('heroBg'); if (heroBg) heroBg.style.backgroundImage = `url('${data.hero.image}')`; setEl('heroBadge', 'textContent', data.hero.badge); animateHeroTitle(data.hero.title, data.hero.accentWords); setEl('heroSubtitle', 'textContent', data.hero.subtitle); setEl('locationName', 'textContent', data.locationName); setEl('whatsapp', 'textContent', data.whatsapp); setEl('aboutImage', 'src', data.about.image); setEl('visionaries', 'textContent', data.about.visionaries);
+      if (data.mission) renderMinistrySection(data.mission); setEl('sermonFrame', 'src', data.sermon.embedUrl); setEl('sermonDesc', 'textContent', data.sermon.desc); setEl('watchLink', 'href', data.sermon.watchUrl); setEl('listenLink', 'href', data.sermon.listenUrl); setEl('notesLink', 'href', data.sermon.notesUrl);
+      const eventsScroller = document.getElementById('eventsScroller'); eventsScroller.innerHTML=''; (data.events||[]).forEach((e, i) => { const a=document.createElement('a'); a.href=e.href||'#'; a.className='group min-w-[82%] sm:min-w-0 rounded-2xl overflow-hidden border border-white/10 bg-white/5 hover:bg-white/10 transition-all duration-300 hover:-translate-y-1 block snap-start'; a.setAttribute('data-reveal',''); a.style.setProperty('--reveal-delay', `${i * 100}ms`); a.innerHTML=`<div class="aspect-[4/3] w-full bg-center bg-cover" style="background-image:url('${e.img}')" role="img" aria-label="${e.title}"></div><div class="p-4"><p class="text-sm text-white/60">${e.date}</p><h3 class="mt-1 text-lg font-semibold group-hover:text-[var(--accent)] transition-colors">${e.title}</h3></div>`; eventsScroller.appendChild(a); });
+      const waDigits = digitsOnly(data.whatsapp); const waUrl = `https://wa.me/${waDigits}`; setEl('waLink', 'href', waUrl); setEl('waLink', 'textContent', data.whatsapp); setEl('emailLink', 'href', 'mailto:' + data.email); setEl('emailLink', 'textContent', data.email); setEl('addressBox', 'textContent', data.address); setEl('footerAddress', 'textContent', `${data.locationName} — ${data.address}`); setEl('year', 'textContent', new Date().getFullYear());
+      if (data.socials) { setEl('facebookLink', 'href', data.socials.facebookUrl || '#'); setEl('instagramLink', 'href', data.socials.instagramUrl || '#'); setEl('youtubeLink', 'href', data.socials.youtubeUrl || '#'); }
+      const schema = {"@context":"https://schema.org","@type":"Church","name":data.churchName,"url":document.location.href,"logo":data.brand.logo,"address":{"@type":"PostalAddress","streetAddress":data.address,"addressLocality":"Lemba","addressRegion":"Kinshasa","addressCountry":"CD"},"telephone":"+"+waDigits}; setEl('schemaLd', 'textContent', JSON.stringify(schema));
+    }
+
+    // ---- NOUVELLE GESTION DU FORMULAIRE ----
+    function handleContactFormSubmit(event) {
+      event.preventDefault(); // Empêche le rechargement de la page
+
+      const form = document.getElementById('contactForm');
+      const submitBtn = document.getElementById('submitBtn');
+      const formStatus = document.getElementById('formStatus');
+      const formData = new FormData(form);
+
+      // Validation côté client (simple)
+      if (!formData.get('name') || !formData.get('phone') || !formData.get('message')) {
+        formStatus.textContent = 'Veuillez remplir les champs requis.';
+        formStatus.className = 'text-red-400 text-sm font-medium';
+        return;
+      }
+      
+      // Désactiver le bouton et afficher un message de chargement
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Envoi en cours...';
+      formStatus.textContent = '';
+      formStatus.className = 'text-sm font-medium';
+
+      fetch('send_mail.php', {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === 'success') {
+          formStatus.textContent = data.message;
+          formStatus.classList.add('text-green-400');
+          form.reset(); // Vider le formulaire après succès
+        } else {
+          // Afficher le message d'erreur renvoyé par PHP
+          formStatus.textContent = data.message || 'Une erreur est survenue.';
+          formStatus.classList.add('text-red-400');
+        }
+      })
+      .catch(error => {
+        console.error('Erreur Fetch:', error);
+        formStatus.textContent = 'Une erreur réseau est survenue. Veuillez réessayer.';
+        formStatus.classList.add('text-red-400');
+      })
+      .finally(() => {
+        // Réactiver le bouton dans tous les cas
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Envoyer le message';
+      });
+    }
+
+    // ---- Verse of the day (Gemini) ----
+    function getApiKey(){
+      if (window.GEMINI_API_KEY) return window.GEMINI_API_KEY; const meta = document.querySelector('meta[name="gemini-key"]'); if (meta && meta.getAttribute('content')) return meta.getAttribute('content'); try { return localStorage.getItem('GEMINI_API_KEY') || ''; } catch { return ''; }
+    }
+    async function getVerseOfTheDay(){
+      const verseEl = document.getElementById('verseText'); const refEl = document.getElementById('verseRef'); if (!verseEl || !refEl) return; const today = new Date().toISOString().split('T')[0]; try { const cached = localStorage.getItem('verseOfTheDay'); if (cached) { const { date, verse, reference } = JSON.parse(cached); if (date === today) { verseEl.textContent = `“${verse}”`; refEl.textContent = reference; return; } } } catch { localStorage.removeItem('verseOfTheDay'); }
+      const apiKey = getApiKey(); if (!apiKey) return;
+      try {
+        const ai = new GoogleGenAI({ apiKey }); const schema = { type: Type.OBJECT, properties: { verse: { type: Type.STRING }, reference: { type: Type.STRING } }, required: ['verse','reference'] };
+        const response = await ai.models.generateContent({ model: 'gemini-2.5-flash', contents: "Donne-moi un verset biblique inspirant et encourageant pour la journée, en français. Le verset doit apporter de l'espoir, de la force ou de la paix.", config: { responseMimeType: 'application/json', responseSchema: schema, temperature: 0.8 } });
+        const json = JSON.parse(response.text); if (json?.verse && json?.reference){ verseEl.textContent = `“${json.verse}”`; refEl.textContent = json.reference; localStorage.setItem('verseOfTheDay', JSON.stringify({ date: today, verse: json.verse, reference: json.reference })); }
+      } catch (err){ console.error('Erreur Gemini:', err); }
+    }
+
+    // ---- UI / Animations ----
+    const animationManager = {
+      revealObserver: null,
+      init(){ this.onScroll(); this.setupReveal(); this.setupActiveNav(); this.initSmoothAnchors(); window.addEventListener('scroll', () => this.onScroll(), { passive: true }); document.getElementById('toTop')?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' })); },
+      setupReveal(){ if (this.revealObserver) this.revealObserver.disconnect(); this.revealObserver = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('in-view'); }); }, { threshold: 0.1 }); document.querySelectorAll('[data-reveal]').forEach(el => this.revealObserver.observe(el)); },
+      initSmoothAnchors(){ const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h')) || 64; document.querySelectorAll('a[href^="#"]').forEach(a => { const href = a.getAttribute('href'); if (!href || href === '#') return; a.addEventListener('click', (e) => { const target = document.querySelector(href); if (!target) return; e.preventDefault(); const y = target.getBoundingClientRect().top + window.pageYOffset - headerH - 12; window.scrollTo({ top: y, behavior: 'smooth' }); }); }); },
+      onScroll(){ const h = document.documentElement; if (h.scrollHeight <= h.clientHeight) return; const scrolled = h.scrollTop / (h.scrollHeight - h.clientHeight); const progressBar = document.querySelector('.progress'); if (progressBar) progressBar.style.transform = `scaleX(${Math.max(0, Math.min(1, scrolled))})`; const toTop = document.getElementById('toTop'); if (toTop) toTop.classList.toggle('hidden', h.scrollTop < 420); },
+      setupActiveNav(){ const links = Array.from(document.querySelectorAll('#mainNav a[href^="#"]')); const sections = links.map(a => document.querySelector(a.getAttribute('href'))).filter(Boolean); if (sections.length === 0) return; const io = new IntersectionObserver((entries) => { entries.forEach(entry => { const id = '#' + entry.target.id; links.forEach(link => { if (link.getAttribute('href') === id) { link.classList.toggle('nav-active', entry.isIntersecting); if (entry.isIntersecting) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); } }); }); }, { rootMargin: '-40% 0px -50% 0px', threshold: 0.01 }); sections.forEach(sec => io.observe(sec)); }
+    };
+
+    // ---- Mobile menu ----
+    document.getElementById('menuBtn')?.addEventListener('click', ()=>{ const mobileNav = document.getElementById('mobileNav'); const isOpen = !mobileNav.classList.contains('hidden'); mobileNav.classList.toggle('hidden'); document.getElementById('menuBtn').setAttribute('aria-expanded', String(!isOpen)); });
+    document.querySelectorAll('#mobileNav a').forEach(a=>a.addEventListener('click', ()=>{ document.getElementById('mobileNav').classList.add('hidden'); document.getElementById('menuBtn').setAttribute('aria-expanded','false'); }));
+
+    // ---- App init ----
+    document.addEventListener('DOMContentLoaded', () => {
+      render(siteData);
+      updateNextService();
+      getVerseOfTheDay();
+      animationManager.init();
+
+      // On attache notre nouvelle fonction au formulaire
+      document.getElementById('contactForm')?.addEventListener('submit', handleContactFormSubmit);
+    });
+</script>
+</body>
+</html>
