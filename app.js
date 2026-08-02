@@ -152,8 +152,140 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         document.getElementById('contactForm')?.addEventListener('submit', handleContactFormSubmit);
 
+        // Initialize Chatbot
+        initChatbot();
+
     } catch (error) {
         console.error("Could not load site data:", error);
         document.body.innerHTML = '<div style="color: white; text-align: center; padding-top: 50px;">Erreur de chargement du site. Veuillez réessayer plus tard.</div>';
     }
 });
+
+// ---- Chatbot Functionality ----
+function initChatbot() {
+    const chatToggle = document.getElementById('chat-toggle');
+    const chatClose = document.getElementById('chat-close');
+    const chatWindow = document.getElementById('chat-window');
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatMessages = document.getElementById('chat-messages');
+    const chatSubmit = document.getElementById('chat-submit');
+
+    if (!chatToggle || !chatWindow) return;
+
+    // Toggle chat window
+    chatToggle.addEventListener('click', () => {
+        chatWindow.classList.toggle('hidden');
+        if (!chatWindow.classList.contains('hidden')) {
+            chatInput.focus();
+            chatToggle.querySelector('i').classList.replace('fa-comments', 'fa-comment-dots');
+        } else {
+            chatToggle.querySelector('i').classList.replace('fa-comment-dots', 'fa-comments');
+        }
+    });
+
+    // Close chat window
+    chatClose.addEventListener('click', () => {
+        chatWindow.classList.add('hidden');
+        chatToggle.querySelector('i').classList.replace('fa-comment-dots', 'fa-comments');
+    });
+
+    // Handle chat form submission
+    chatForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const userMessage = chatInput.value.trim();
+        if (!userMessage) return;
+
+        // Add user message to chat
+        addMessage(userMessage, 'user');
+        chatInput.value = '';
+        chatSubmit.disabled = true;
+
+        // Get AI response
+        try {
+            const apiKey = getApiKey();
+            if (!apiKey) {
+                addMessage("Désolé, je ne peux pas répondre pour le moment. Veuillez contacter l'église directement.", 'bot');
+                chatSubmit.disabled = false;
+                return;
+            }
+
+            const ai = new GoogleGenAI({ apiKey });
+            const schema = { 
+                type: Type.OBJECT, 
+                properties: { 
+                    response: { type: Type.STRING },
+                    action: { type: Type.STRING, description: "Optional action like 'contact', 'visit', 'give'" }
+                }, 
+                required: ['response'] 
+            };
+
+            const context = `Tu es l'assistant virtuel de l'Église Alliance avec Christ (EAC), une église à Lemba, Kinshasa. 
+            Tu es chaleureux, accueillant et utile. Réponds brièvement (2-3 phrases max).
+            
+            Informations sur l'église:
+            - Culte d'intercession: Mardi 08h00-11h00
+            - Culte d'enseignement: Mercredi 16h00-19h00
+            - Célébration: Dimanche 08h30-12h00
+            - Visionnaires: Pasteurs dédiés au ministère de délivrance
+            - Mission: Délivrance intégrale, bénédiction sans but lucratif
+            
+            Question de l'utilisateur: ${userMessage}`;
+
+            const response = await ai.models.generateContent({ 
+                model: 'gemini-2.5-flash', 
+                contents: context, 
+                config: { 
+                    responseMimeType: 'application/json', 
+                    responseSchema: schema, 
+                    temperature: 0.7 
+                } 
+            });
+
+            const json = JSON.parse(response.text);
+            addMessage(json.response, 'bot');
+        } catch (err) {
+            console.error('Chatbot error:', err);
+            addMessage("Désolé, j'ai rencontré un problème. Veuillez réessayer ou nous contacter directement.", 'bot');
+        } finally {
+            chatSubmit.disabled = false;
+        }
+    });
+
+    // Helper function to add messages
+    function addMessage(text, sender) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'flex items-start gap-2';
+        
+        if (sender === 'user') {
+            messageDiv.classList.add('justify-end');
+            messageDiv.innerHTML = `
+                <div class="bg-[var(--accent)] rounded-2xl rounded-tr-none px-4 py-2 max-w-[85%]">
+                    <p class="text-sm text-black font-medium">${escapeHtml(text)}</p>
+                </div>
+                <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-user text-white text-sm"></i>
+                </div>
+            `;
+        } else {
+            messageDiv.innerHTML = `
+                <div class="w-8 h-8 rounded-full bg-[var(--accent)] flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-robot text-white text-sm"></i>
+                </div>
+                <div class="bg-white/10 rounded-2xl rounded-tl-none px-4 py-2 max-w-[85%]">
+                    <p class="text-sm text-white/90">${escapeHtml(text)}</p>
+                </div>
+            `;
+        }
+        
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // Escape HTML to prevent XSS
+    function escapeHtml(text) {
+        const div = document.createElement('div');
+        div.textContent = text;
+        return div.innerHTML;
+    }
+}
