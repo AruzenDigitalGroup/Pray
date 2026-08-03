@@ -429,6 +429,70 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5"><path d="M12 4l-8 8h5v8h6v-8h5z"/></svg>
   </button>
 
+  <!-- Chatbot Widget -->
+  <div id="chatbot-container" class="fixed bottom-4 right-4 md:right-6 z-50 flex flex-col items-end">
+    <!-- Chat Window (hidden by default) -->
+    <div id="chat-window" class="hidden mb-4 w-80 sm:w-96 bg-zinc-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
+      <!-- Chat Header -->
+      <div class="bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] p-4 flex items-center justify-between">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center">
+            <i class="fa-solid fa-robot text-white"></i>
+          </div>
+          <div>
+            <h3 class="font-semibold text-white">Assistant EAC</h3>
+            <p class="text-xs text-white/80">En ligne</p>
+          </div>
+        </div>
+        <button id="chat-close" class="text-white/80 hover:text-white transition-colors" aria-label="Fermer le chat">
+          <i class="fa-solid fa-xmark text-xl"></i>
+        </button>
+      </div>
+      
+      <!-- Chat Messages -->
+      <div id="chat-messages" class="h-80 overflow-y-auto p-4 space-y-3 bg-zinc-900">
+        <div class="flex items-start gap-2">
+          <div class="w-8 h-8 rounded-full bg-[var(--accent)] flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-robot text-white text-sm"></i>
+          </div>
+          <div class="bg-white/10 rounded-2xl rounded-tl-none px-4 py-2 max-w-[85%]">
+            <p class="text-sm text-white/90">Bonjour ! 👋 Je suis l'assistant virtuel de l'Église Alliance avec Christ. Comment puis-je vous aider aujourd'hui ?</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Chat Input -->
+      <div class="border-t border-white/10 p-4 bg-zinc-800">
+        <form id="chat-form" class="flex items-center gap-2">
+          <input 
+            type="text" 
+            id="chat-input" 
+            placeholder="Écrivez votre message..." 
+            class="flex-1 bg-white/10 border border-white/10 rounded-full px-4 py-2 text-sm text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
+            autocomplete="off"
+          />
+          <button 
+            type="submit" 
+            id="chat-submit"
+            class="w-10 h-10 rounded-full bg-[var(--accent)] text-black flex items-center justify-center hover:opacity-90 transition-opacity disabled:opacity-50"
+            aria-label="Envoyer"
+          >
+            <i class="fa-solid fa-paper-plane text-sm"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    
+    <!-- Chat Toggle Button -->
+    <button 
+      id="chat-toggle" 
+      class="w-14 h-14 rounded-full bg-gradient-to-r from-[var(--accent)] to-[var(--accent-2)] text-black flex items-center justify-center shadow-lg hover:shadow-xl transition-all hover:scale-105"
+      aria-label="Ouvrir le chat"
+    >
+      <i class="fa-solid fa-comments text-2xl"></i>
+    </button>
+  </div>
+
   <!-- JSON-LD Schema -->
   <script type="application/ld+json" id="schemaLd"></script>
 
